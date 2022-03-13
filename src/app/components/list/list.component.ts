@@ -8,16 +8,40 @@ import { FormControl } from '@angular/forms';
 })
 export class ListComponent implements OnInit {
   productsForm = new FormGroup({
-    title: new FormControl(''),
-    quantity: new FormControl(''),
+    title: new FormControl('شامپۆ'),
+    quantity: new FormControl(1),
   });
+  products = [
+    ' تایت تۆ 4kg',
+    'معجون مناڵ و گەورە',
+    'تایت تۆ9kg',
+    'تایت عا 5kg',
+    'شامپۆی جل ',
+    'معتەری جل',
+    'کلێنشی تەڕ گەورەو مناڵ',
+    'کلێنسی وشک ',
+    'کلێنسی مەتبەخ',
+    'سابون Dane',
+    ' سابون لۆکس ',
+    'سابون ئیڤڵ ',
+    'مەعتەری عام',
+    'شامپۆی قژ',
+    ' شامپۆی دەست',
+    'کەفی دەست',
+    'دایبی گیزمۆ',
+
+    'فلاش ئیڤڵ',
+    'فلاش هارمۆنی',
+    'فاست ملەوەن',
+    ' پاکەرەوەی چەوری تەباخ']
   tableData:
     [{
       title: string,
       quantity: number
     }]
     | undefined;
-  result: any
+  result: any;
+  i: number = 0
   constructor() { }
 
   ngOnInit(): void {
@@ -29,18 +53,27 @@ export class ListComponent implements OnInit {
     }
     else {
 
-      this.result = this.tableData.filter(s => s.title = this.productsForm.value.title);
+      this.result = this.tableData.filter((s, index) => {
+        if (s.title === this.productsForm.value.title) {
 
-      if (this.result) {
-        console.log('test')
+          this.i = index
+        }
+        return s.title === this.productsForm.value.title
+      })
 
+      if (this.result.length > 0) {
+        this.tableData[this.i].quantity = +this.tableData[this.i].quantity + 1
+        this.i = 0
 
       }
       else {
+
         this.tableData?.push(this.productsForm.value)
       }
+
     }
 
 
   }
+
 }
